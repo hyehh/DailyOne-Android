@@ -7,7 +7,7 @@
 
 👉 7.23 ~ 7.24 : Upload Play Store
 
-👉 7.36 : Start ios version
+👉 7.26 : Start ios version
 
 #
 ## About Source (완성후 삭제)
