@@ -1,6 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="오늘의 감정"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            android:paddingBottom="16dp"
+            />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            >
+            <ImageView
+                android:id="@+id/diary_iv_emoji_joy"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="8dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_baseline_add_24"
+                />
+            <ImageView
+                android:id="@+id/diary_iv_emoji_sad"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="8dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_baseline_add_24"
+                />
+            <ImageView
+                android:id="@+id/diary_iv_emoji_angry"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="8dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_baseline_add_24"
+                />
+            <ImageView
+                android:id="@+id/diary_iv_emoji_soso"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="8dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_baseline_add_24"
+                />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:padding="16dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="오늘의 일기"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            android:paddingBottom="16dp"
+            />
+        <EditText
+            android:id="@+id/diary_edt_content"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="일기를 작성하세요.\n(20자 이내)"
+            android:textSize="20dp"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/diary_btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="작성완료"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        />
+
+</LinearLayout>
