@@ -2,6 +2,7 @@ package com.aosproject.dailyone.fragment;
 
 import android.app.ActionBar;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
@@ -34,6 +35,8 @@ public class DiaryFragment extends Fragment {
     String diaryContent;
     SQLiteDatabase DB;
     int dbEmoji;
+    // boolean[] emojiChoice = {false, false, false, false};
+    ImageView[] ivEmoji = null;
 
     @Nullable
     @Override
@@ -60,20 +63,29 @@ public class DiaryFragment extends Fragment {
         ivSad = view.findViewById(R.id.diary_iv_emoji_sad);
         ivAngry = view.findViewById(R.id.diary_iv_emoji_angry);
         ivSoso = view.findViewById(R.id.diary_iv_emoji_soso);
+        ivEmoji = new ImageView[] {ivJoy, ivSad, ivAngry, ivSoso};
+
+
         btnInsert = view.findViewById(R.id.diary_btn_insert);
+
 
         edtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
 
+        ivJoy.setOnClickListener(emojiClickListener);
+        ivSad.setOnClickListener(emojiClickListener);
+        ivAngry.setOnClickListener(emojiClickListener);
+        ivSoso.setOnClickListener(emojiClickListener);
+
         btnInsert.setOnClickListener(insertClickListener);
     }
+
     View.OnClickListener insertClickListener = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
             try{
                 diaryContent = edtContent.getText().toString();
-                dbEmoji = 1; // 선택한 Emoji 숫자 받아오기
-
+                // joy = 0, sad = 1, angry = 2, soso = 3
                 DB = diaryHelper.getWritableDatabase();
                 String query = "INSERT INTO diarydata (content, emoji) VALUES ('" + diaryContent + "', " + dbEmoji + ");";
                 DB.execSQL(query);
@@ -87,6 +99,41 @@ public class DiaryFragment extends Fragment {
 
         }
     };
+
+    View.OnClickListener emojiClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.diary_iv_emoji_joy:
+                    dbEmoji = chooseEmoji(0);
+                    break;
+                case R.id.diary_iv_emoji_sad:
+                    dbEmoji = chooseEmoji(1);
+                    break;
+                case R.id.diary_iv_emoji_angry:
+                    dbEmoji = chooseEmoji(2);
+                    break;
+                case R.id.diary_iv_emoji_soso:
+                    dbEmoji = chooseEmoji(3);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    // get emoji number
+    private int chooseEmoji(int emojiNum){
+        for(int i=0; i<ivEmoji.length; i++){
+            ivEmoji[i].setBackgroundColor(Color.TRANSPARENT);
+            if(i==emojiNum){
+                ivEmoji[i].setBackgroundColor(Color.LTGRAY);
+            }
+        }
+        return emojiNum;
+    }
+
+
 //    private String getTime() {
 //        long mNow = System.currentTimeMillis();
 //        Date mDate = new Date(mNow);
