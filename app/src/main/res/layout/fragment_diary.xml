@@ -91,7 +91,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/diary_btn_submit"
+        android:id="@+id/diary_btn_insert"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:text="작성완료"
