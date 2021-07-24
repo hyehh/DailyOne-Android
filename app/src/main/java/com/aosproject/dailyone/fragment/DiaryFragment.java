@@ -1,6 +1,7 @@
 package com.aosproject.dailyone.fragment;
 
 import android.app.ActionBar;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,7 +18,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
+import com.aosproject.dailyone.MainActivity;
 import com.aosproject.dailyone.R;
 import com.aosproject.dailyone.util.DiaryHelper;
 
@@ -32,11 +35,12 @@ public class DiaryFragment extends Fragment {
     EditText edtContent;
     ImageView ivJoy, ivSad, ivAngry, ivSoso;
     Button btnInsert;
-    String diaryContent;
     SQLiteDatabase DB;
-    int dbEmoji;
-    // boolean[] emojiChoice = {false, false, false, false};
     ImageView[] ivEmoji = null;
+
+    int dbId = 0, dbEmoji = 0; // joy = 1, sad = 2, angry = 3, soso = 4
+    String diaryContent, dbDate, today;
+
 
     @Nullable
     @Override
@@ -45,15 +49,15 @@ public class DiaryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_diary, container,false);
 
         diaryHelper = new DiaryHelper(getContext());
-
         addListener(view);
 
-        return view;
-    }
+        today = getTime();
+        if (checkWriteDiary(today.substring(0,10))){
+            edtContent.setText(diaryContent);
+            chooseEmoji(dbEmoji-1);
+        }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+        return view;
     }
 
     private void addListener(View view){
@@ -65,9 +69,7 @@ public class DiaryFragment extends Fragment {
         ivSoso = view.findViewById(R.id.diary_iv_emoji_soso);
         ivEmoji = new ImageView[] {ivJoy, ivSad, ivAngry, ivSoso};
 
-
         btnInsert = view.findViewById(R.id.diary_btn_insert);
-
 
         edtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
 
@@ -83,18 +85,34 @@ public class DiaryFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            try{
-                diaryContent = edtContent.getText().toString();
-                // joy = 0, sad = 1, angry = 2, soso = 3
-                DB = diaryHelper.getWritableDatabase();
-                String query = "INSERT INTO diarydata (content, emoji) VALUES ('" + diaryContent + "', " + dbEmoji + ");";
-                DB.execSQL(query);
+            DB = diaryHelper.getWritableDatabase();
+            diaryContent = edtContent.getText().toString();
+            if (dbId == 0) {
+                if (dbEmoji == 0) {
+                    Toast.makeText(getContext(), "오늘 하루는 어떠셨나요?\n오늘의 감정을 선택해주세요.", Toast.LENGTH_LONG).show();
+                } else {
+                    try {
+                        String query = "INSERT INTO diarydata (content, emoji) VALUES ('" + diaryContent + "', " + dbEmoji + ");";
+                        DB.execSQL(query);
 
-                diaryHelper.close();
-                Toast.makeText(getContext(), "Insert OK!", Toast.LENGTH_LONG).show();
-            }catch (Exception e){
-                e.printStackTrace();
-                Toast.makeText(getContext(), "Insert Error!" , Toast.LENGTH_LONG).show();
+                        diaryHelper.close();
+                        Toast.makeText(getContext(), "오늘의 일기가 등록되었습니다.", Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), "Insert Error!", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }else{
+                try{
+                    today = getTime();
+                    String query = "UPDATE diarydata SET content = '" + diaryContent + "', emoji = " + dbEmoji + ", date = '" + today + "' WHERE id = " + dbId + ";";
+                    DB.execSQL(query);
+                    diaryHelper.close();
+                    Toast.makeText(getContext(), "Update OK!", Toast.LENGTH_LONG).show();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Update Error!" , Toast.LENGTH_LONG).show();
+                }
             }
 
         }
@@ -130,15 +148,42 @@ public class DiaryFragment extends Fragment {
                 ivEmoji[i].setBackgroundColor(Color.LTGRAY);
             }
         }
-        return emojiNum;
+        return emojiNum + 1;
+    }
+
+    private boolean checkWriteDiary(String today){
+        try{
+            DB = diaryHelper.getReadableDatabase();
+            String query = "SELECT id, content, emoji, date FROM diarydata WHERE date like '" + today + "%';";
+
+            Cursor cursor = DB.rawQuery(query, null);
+            StringBuffer stringBuffer = new StringBuffer();
+
+            while(cursor.moveToNext()){
+                dbId = cursor.getInt(0);
+                diaryContent = cursor.getString(1);
+                dbEmoji = cursor.getInt(2);
+                dbDate = cursor.getString(3);
+                Log.v(TAG, query);
+                Log.v(TAG, "id = " + dbId + "content = " + diaryContent);
+            }
+            cursor.close();
+            diaryHelper.close();
+            Toast.makeText(getContext(), "Select OK!", Toast.LENGTH_LONG).show();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Select Error!" , Toast.LENGTH_LONG).show();
+            return false;
+        }
     }
 
 
-//    private String getTime() {
-//        long mNow = System.currentTimeMillis();
-//        Date mDate = new Date(mNow);
-//        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//        String stringDate = mFormat.format(mDate);
-//        return stringDate;
-//    }
+    private String getTime() {
+        long mNow = System.currentTimeMillis();
+        Date mDate = new Date(mNow);
+        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String stringDate = mFormat.format(mDate);
+        return stringDate;
+    }
 }
