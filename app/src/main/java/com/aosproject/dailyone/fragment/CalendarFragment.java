@@ -145,22 +145,25 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
         calendarDate = FORMATTER.format(date.getDate());
         if(selected) {
             calendarLinearLayout.setVisibility(View.GONE);
-            for (int i = 0; i < dbDateList.length; i++) {
-                if (calendarDate.equals(dbDateList[i].substring(0, dbDateList[i].indexOf(" ")))) {
-                    calendarLinearLayout.setVisibility(View.VISIBLE);
+            if(dbDateList[0].isEmpty() == false){
+                for (int i = 0; i < dbDateList.length; i++) {
+                    if (calendarDate.equals(dbDateList[i].substring(0, dbDateList[i].indexOf(" ")))) {
+                        calendarLinearLayout.setVisibility(View.VISIBLE);
 
-                    calendar_tv_content.setText(dbContentList[i]);
-                    if(dbEmojiList[i].equals("0")){
-                        calendar_iv_emoji.setImageResource(R.drawable.emoji_happy);
-                    }else if(dbEmojiList[i].equals("1")){
-                        calendar_iv_emoji.setImageResource(R.drawable.emoji_sad);
-                    }else if(dbEmojiList[i].equals("2")){
-                        calendar_iv_emoji.setImageResource(R.drawable.emoji_angry);
-                    }else {
-                        calendar_iv_emoji.setImageResource(R.drawable.emoji_soso);
+                        calendar_tv_content.setText(dbContentList[i]);
+                        if(dbEmojiList[i].equals("0")){
+                            calendar_iv_emoji.setImageResource(R.drawable.emoji_happy);
+                        }else if(dbEmojiList[i].equals("1")){
+                            calendar_iv_emoji.setImageResource(R.drawable.emoji_sad);
+                        }else if(dbEmojiList[i].equals("2")){
+                            calendar_iv_emoji.setImageResource(R.drawable.emoji_angry);
+                        }else {
+                            calendar_iv_emoji.setImageResource(R.drawable.emoji_soso);
+                        }
                     }
                 }
             }
+
         }
     }
     /**
@@ -178,9 +181,11 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
 
             final ArrayList<CalendarDay> dates = new ArrayList<>();
 
-            for (int i = 0; i < dbDateList.length; i++) {
-                final CalendarDay day = CalendarDay.from(LocalDate.parse(dbDateList[i].substring(0, dbDateList[i].indexOf(" "))));
-                dates.add(day);
+            if (dbDateList[0].isEmpty() == false) {
+                for (int i = 0; i < dbDateList.length; i++) {
+                    final CalendarDay day = CalendarDay.from(LocalDate.parse(dbDateList[i].substring(0, dbDateList[i].indexOf(" "))));
+                    dates.add(day);
+                }
             }
 
              return dates;
