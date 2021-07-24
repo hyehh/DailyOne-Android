@@ -3,11 +3,11 @@
 
 ## TODO
 
-👉 ~ 7.23 : Developing (Hope to finish 7.22)
+👉 ~ 7.25 : Developing (Hope to finish 7.24)
 
-👉 7.23 ~ 7.24 : Upload Play Store
+👉 7.26 ~ 7.27 : Upload Play Store
 
-👉 7.26 : Start ios version
+👉 7.28 : Start ios version
 
 #
 ## About Source (완성후 삭제)
@@ -26,7 +26,7 @@
 > 
 > 👩‍💻  [HYOKYEONG JO](https://github.com/hogang1223)
 > 
-> 👩‍💻  [ JO](https://github.com/hyehh)
+> 👩‍💻  [HYEJI JO](https://github.com/hyehh)
 > 
 > 👩‍💻  [DOHEE LEE](https://github.com/Lee-Dohee)
 > 
