@@ -1,12 +1,10 @@
 package com.aosproject.dailyone.decorator;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 
-import com.aosproject.dailyone.R;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
@@ -14,11 +12,11 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import org.threeten.bp.LocalDate;
 
-public class OneDayDecorator implements DayViewDecorator {
+public class SelectDayDecorator implements DayViewDecorator {
     private CalendarDay date;
 
-    public OneDayDecorator() {
-        date = CalendarDay.today();
+    public SelectDayDecorator() {
+        // date = CalendarDay.today();
     }
 
     @Override
@@ -28,9 +26,9 @@ public class OneDayDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new StyleSpan(Typeface.BOLD));
-        view.addSpan(new RelativeSizeSpan(1.2f));
-        view.addSpan(new ForegroundColorSpan(0xFF1B663E));
+        view.addSpan(new StyleSpan(Typeface.NORMAL));
+        view.addSpan(new RelativeSizeSpan(1.4f));
+        view.addSpan(new ForegroundColorSpan(0xFFFFFFFF));
     }
 
     /**

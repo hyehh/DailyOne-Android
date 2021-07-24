@@ -1,12 +1,18 @@
 package com.aosproject.dailyone.fragment;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +21,8 @@ import androidx.fragment.app.Fragment;
 import com.aosproject.dailyone.R;
 import com.aosproject.dailyone.decorator.EventDecorator;
 import com.aosproject.dailyone.decorator.OneDayDecorator;
+import com.aosproject.dailyone.decorator.SelectDayDecorator;
+import com.aosproject.dailyone.util.DiaryHelper;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
@@ -23,6 +31,7 @@ import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executors;
 
@@ -30,49 +39,129 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final OneDayDecorator oneDayDecorator = new OneDayDecorator();
+    private final SelectDayDecorator selectDayDecorator = new SelectDayDecorator();
 
     MaterialCalendarView materialCalendarView;
-    TextView textView;
+    TextView calendar_tv_content;
+    ImageView calendar_iv_emoji;
+    SQLiteDatabase db;
+    DiaryHelper diary;
+    String dbContent;
+    String dbEmoji;
+    String dbDate;
+    String calendarDate;
+    String[] dbContentList;
+    String[] dbEmojiList;
+    String[] dbDateList;
+    LinearLayout calendarLinearLayout;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_calendar, container,false);
+        Log.v("Message", "onCreateView");
         return view;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (!getUserVisibleHint()) {
+            return;
+        }
+        Log.v("Message", "Resume");
         connectGoData();
     }
 
     private void connectGoData() {
+        diary = new DiaryHelper(getActivity());
+
         materialCalendarView = getActivity().findViewById(R.id.material_calendar_view);
-        textView = getActivity().findViewById(R.id.text_view);
+        calendar_tv_content = getActivity().findViewById(R.id.calendar_tv_content);
+        calendar_iv_emoji = getActivity().findViewById(R.id.calendar_iv_emoji);
+        calendarLinearLayout = getActivity().findViewById(R.id.calendar_linearLayout);
 
-        // text Size
-        materialCalendarView.setHeaderTextAppearance(R.style.TextAppearance_AppCompat_Medium);
-        materialCalendarView.setDateTextAppearance(R.style.TextAppearance_AppCompat_Small);
-        materialCalendarView.setWeekDayTextAppearance(R.style.TextAppearance_AppCompat_Small);
+        dbSelect();
+    }
 
-        materialCalendarView.addDecorators(
+    private void dbSelect() {
+        try {
+            db = diary.getReadableDatabase();
+            String query = "SELECT content, emoji, date FROM diarydata;";
+            Cursor cursor = db.rawQuery(query, null);
+            StringBuffer stringBufferContent = new StringBuffer();
+            StringBuffer stringBufferEmoji = new StringBuffer();
+            StringBuffer stringBufferDate = new StringBuffer();
+            while (cursor.moveToNext()){
+                String content = cursor.getString(0);
+                int emoji = cursor.getInt(1);
+                String date = cursor.getString(2);
+                stringBufferContent.append(content+"@,~/!@");
+                stringBufferEmoji.append(emoji+",");
+                stringBufferDate.append(date+",");
+            }
+
+            dbContent = stringBufferContent.toString();
+            dbEmoji = stringBufferEmoji.toString();
+            dbDate = stringBufferDate.toString();
+
+            dbContentList = dbContent.split("@,~/!@");
+            dbEmojiList = dbEmoji.split(",");
+            dbDateList = dbDate.split(",");
+
+            cursor.close();
+            diary.close();
+            // text Size
+            materialCalendarView.setHeaderTextAppearance(R.style.TextAppearance_AppCompat_Large);
+            materialCalendarView.setDateTextAppearance(R.style.TextAppearance_AppCompat_Medium);
+            materialCalendarView.setWeekDayTextAppearance(R.style.TextAppearance_AppCompat_Medium);
+
+            materialCalendarView.addDecorators(
 //                new MySelectorDecorator(this),
 //                new HighlightWeekendsDecorator(),
-                oneDayDecorator
-        );
-        new ApiSimulator().executeOnExecutor(Executors.newSingleThreadExecutor());
+                    selectDayDecorator,
+                    oneDayDecorator
 
-        materialCalendarView.setOnDateChangedListener(this);
+            );
+            new ApiSimulator().executeOnExecutor(Executors.newSingleThreadExecutor());
+
+            materialCalendarView.setOnDateChangedListener(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        oneDayDecorator.setDate(date.getDate());
+        selectDayDecorator.setDate(date.getDate());
         materialCalendarView.invalidateDecorators();
-        // 여기에서 비교 formatter 랑 sqlite의 날짜가 같다면! 그럼 그 때 표시해줘~~~
-        textView.setText(selected ? FORMATTER.format(date.getDate()) : "No Selection");
+
+        calendarDate = FORMATTER.format(date.getDate());
+        if(selected) {
+            calendarLinearLayout.setVisibility(View.GONE);
+            for (int i = 0; i < dbDateList.length; i++) {
+                if (calendarDate.equals(dbDateList[i].substring(0, dbDateList[i].indexOf(" ")))) {
+                    calendarLinearLayout.setVisibility(View.VISIBLE);
+
+                    calendar_tv_content.setText(dbContentList[i]);
+                    if(dbEmojiList[i].equals("0")){
+                        calendar_iv_emoji.setImageResource(R.drawable.emoji_happy);
+                    }else if(dbEmojiList[i].equals("1")){
+                        calendar_iv_emoji.setImageResource(R.drawable.emoji_sad);
+                    }else if(dbEmojiList[i].equals("2")){
+                        calendar_iv_emoji.setImageResource(R.drawable.emoji_angry);
+                    }else {
+                        calendar_iv_emoji.setImageResource(R.drawable.emoji_soso);
+                    }
+                }
+            }
+        }
     }
     /**
      * Simulate an API call to show how to add decorators
@@ -82,19 +171,19 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
         @Override
         protected List<CalendarDay> doInBackground(@NonNull Void... voids) {
             try {
-                Thread.sleep(2000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            LocalDate temp = LocalDate.now().minusMonths(2);
+
             final ArrayList<CalendarDay> dates = new ArrayList<>();
-            for (int i = 0; i < 30; i++) {
-                final CalendarDay day = CalendarDay.from(temp);
+
+            for (int i = 0; i < dbDateList.length; i++) {
+                final CalendarDay day = CalendarDay.from(LocalDate.parse(dbDateList[i].substring(0, dbDateList[i].indexOf(" "))));
                 dates.add(day);
-                temp = temp.plusDays(5);
             }
 
-            return dates;
+             return dates;
         }
 
         @Override
