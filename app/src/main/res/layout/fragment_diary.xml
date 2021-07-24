@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/diary_layout"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -39,7 +40,7 @@
                     android:layout_weight="1"
                     android:layout_marginHorizontal="8dp"
                     android:padding="8dp"
-                    android:src="@drawable/ic_baseline_add_24"
+                    android:src="@drawable/emoji_happy"
                     />
                 <ImageView
                     android:id="@+id/diary_iv_emoji_sad"
@@ -48,7 +49,7 @@
                     android:layout_weight="1"
                     android:layout_marginHorizontal="8dp"
                     android:padding="8dp"
-                    android:src="@drawable/ic_baseline_add_24"
+                    android:src="@drawable/emoji_sad"
                     />
                 <ImageView
                     android:id="@+id/diary_iv_emoji_angry"
@@ -57,7 +58,7 @@
                     android:layout_weight="1"
                     android:layout_marginHorizontal="8dp"
                     android:padding="8dp"
-                    android:src="@drawable/ic_baseline_add_24"
+                    android:src="@drawable/emoji_angry"
                     />
                 <ImageView
                     android:id="@+id/diary_iv_emoji_soso"
@@ -66,7 +67,7 @@
                     android:layout_weight="1"
                     android:layout_marginHorizontal="8dp"
                     android:padding="8dp"
-                    android:src="@drawable/ic_baseline_add_24"
+                    android:src="@drawable/emoji_soso"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -91,10 +92,11 @@
             <EditText
                 android:id="@+id/diary_edt_content"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:hint="일기를 작성 해주세요. (20자 이내)"
                 android:textSize="20dp"
                 android:background="@null"
+                android:windowSoftInputMode="stateAlwaysHidden"
                 />
         </LinearLayout>
         <LinearLayout
