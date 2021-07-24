@@ -33,12 +33,12 @@ public class DiaryFragment extends Fragment {
 
     DiaryHelper diaryHelper;
     EditText edtContent;
-    ImageView ivJoy, ivSad, ivAngry, ivSoso;
+    ImageView ivHappy, ivSad, ivAngry, ivSoso;
     Button btnInsert;
     SQLiteDatabase DB;
     ImageView[] ivEmoji = null;
 
-    int dbId = 0, dbEmoji = 0; // joy = 1, sad = 2, angry = 3, soso = 4
+    int dbId = 0, dbEmoji = 0; // happy = 1, sad = 2, angry = 3, soso = 4
     String diaryContent, dbDate, today;
 
 
@@ -63,17 +63,17 @@ public class DiaryFragment extends Fragment {
     private void addListener(View view){
         edtContent = view.findViewById(R.id.diary_edt_content);
 
-        ivJoy = view.findViewById(R.id.diary_iv_emoji_joy);
+        ivHappy = view.findViewById(R.id.diary_iv_emoji_happy);
         ivSad = view.findViewById(R.id.diary_iv_emoji_sad);
         ivAngry = view.findViewById(R.id.diary_iv_emoji_angry);
         ivSoso = view.findViewById(R.id.diary_iv_emoji_soso);
-        ivEmoji = new ImageView[] {ivJoy, ivSad, ivAngry, ivSoso};
+        ivEmoji = new ImageView[] {ivHappy, ivSad, ivAngry, ivSoso};
 
         btnInsert = view.findViewById(R.id.diary_btn_insert);
 
         edtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
 
-        ivJoy.setOnClickListener(emojiClickListener);
+        ivHappy.setOnClickListener(emojiClickListener);
         ivSad.setOnClickListener(emojiClickListener);
         ivAngry.setOnClickListener(emojiClickListener);
         ivSoso.setOnClickListener(emojiClickListener);
@@ -122,7 +122,7 @@ public class DiaryFragment extends Fragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.diary_iv_emoji_joy:
+                case R.id.diary_iv_emoji_happy:
                     dbEmoji = chooseEmoji(0);
                     break;
                 case R.id.diary_iv_emoji_sad:

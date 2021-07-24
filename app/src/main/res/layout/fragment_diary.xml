@@ -33,7 +33,7 @@
                 android:layout_height="60dp"
                 >
                 <ImageView
-                    android:id="@+id/diary_iv_emoji_joy"
+                    android:id="@+id/diary_iv_emoji_happy"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
