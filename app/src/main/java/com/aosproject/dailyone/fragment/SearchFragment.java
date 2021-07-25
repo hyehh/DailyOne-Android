@@ -56,6 +56,12 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("검색");
+    }
+
     private void searchingDiary(int condition) {
         SQLiteDatabase DB;
         try {
