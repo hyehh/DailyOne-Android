@@ -1,6 +1,5 @@
 package com.aosproject.dailyone.fragment;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,9 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
-import com.aosproject.dailyone.MainActivity;
 import com.aosproject.dailyone.R;
 import com.aosproject.dailyone.util.DiaryHelper;
 
@@ -56,6 +53,13 @@ public class DiaryFragment extends Fragment {
         diaryHelper = new DiaryHelper(getContext());
         addListener(view);
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("오늘의 일기");
         today = getTime(); // 오늘 날짜
 
         // 오늘의 일기를 썼는지 체크. 썼다면 emoji, diaryContent 보여주기
@@ -64,7 +68,7 @@ public class DiaryFragment extends Fragment {
             chooseEmoji(dbEmoji - 1);
         }
 
-        return view;
+
     }
 
     // 오늘의 일기를 작성했는지 체크
@@ -81,16 +85,12 @@ public class DiaryFragment extends Fragment {
                 diaryContent = cursor.getString(1);
                 dbEmoji = cursor.getInt(2);
                 dbDate = cursor.getString(3);
-                Log.v(TAG, query);
-                Log.v(TAG, "id = " + dbId + "content = " + diaryContent);
             }
             cursor.close();
             diaryHelper.close();
-            Toast.makeText(getContext(), "Select OK!", Toast.LENGTH_LONG).show();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getContext(), "Select Error!", Toast.LENGTH_LONG).show();
             return false;
         }
     }
@@ -162,7 +162,7 @@ public class DiaryFragment extends Fragment {
                         Toast.makeText(getContext(), "오늘의 일기가 등록되었습니다.", Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Toast.makeText(getContext(), "Insert Error!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "일기 등록에 실패했습니다!\n관리자에게 문의 해 주세요.", Toast.LENGTH_LONG).show();
                     }
                 }
             } else {
@@ -175,10 +175,10 @@ public class DiaryFragment extends Fragment {
                     }
                     DB.execSQL(query);
                     diaryHelper.close();
-                    Toast.makeText(getContext(), "Update OK!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "오늘의 일기가 수정되었습니다.", Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(getContext(), "Update Error!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "일기 수정에 실패했습니다!\n관리자에게 문의 해 주세요.", Toast.LENGTH_LONG).show();
                 }
             }
 
