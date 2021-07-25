@@ -7,9 +7,9 @@ public class Diary {
     private int id;
     private String content;
     private int emoji;
-    private Date date;
+    private String date;
 
-    public Diary(int id, String content, int emoji, Date date) {
+    public Diary(int id, String content, int emoji, String date) {
         this.id = id;
         this.content = content;
         this.emoji = emoji;
@@ -40,11 +40,11 @@ public class Diary {
         this.emoji = emoji;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }
