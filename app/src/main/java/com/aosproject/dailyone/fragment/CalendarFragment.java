@@ -62,10 +62,12 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().setTitle("캘린더");
         Log.v("Message", "Resume");
         connectGoData();
     }
 
+    // sqlite와 layout과 연결
     private void connectGoData() {
         diary = new DiaryHelper(getActivity());
 
@@ -77,6 +79,7 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
         dbSelect();
     }
 
+    // sqlite db 불러오기 및 캘린더 초기 설정
     private void dbSelect() {
         try {
             db = diary.getReadableDatabase();
@@ -121,6 +124,7 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
         }
     }
 
+    // 캘린더에서 특정 날짜를 선택했을 경우
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
         selectDayDecorator.setDate(date.getDate());
@@ -160,6 +164,7 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
      */
     private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
 
+        // sqlite에 데이터가 있는 날짜에 점 찍기
         @Override
         protected List<CalendarDay> doInBackground(@NonNull Void... voids) {
             try {
@@ -180,13 +185,14 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
             return dates;
         }
 
+        // 특정 날짜에 찍는 점에 대한 decorator 추가
         @Override
         protected void onPostExecute(@NonNull List<CalendarDay> calendarDays) {
             super.onPostExecute(calendarDays);
 
-            if (getActivity().isFinishing()) {
-                return;
-            }
+//            if (getActivity().isFinishing()) {
+//                return;
+//            }
 
             materialCalendarView.addDecorator(new EventDecorator(Color.parseColor("#1b663e"), calendarDays));
 
