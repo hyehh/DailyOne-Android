@@ -54,6 +54,7 @@ public class DiaryFragment extends Fragment {
         addListener(view);
 
         return view;
+    }
 
     @Override
     public void onResume() {
