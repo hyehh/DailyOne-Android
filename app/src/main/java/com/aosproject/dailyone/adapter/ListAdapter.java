@@ -51,19 +51,17 @@ public class ListAdapter extends BaseAdapter {
         }
 
         ImageView imageView = convertView.findViewById(R.id.listVIew_iv_emoji);
+        TextView tv_date = convertView.findViewById(R.id.listView_tv_date);
+        TextView tv_content = convertView.findViewById(R.id.listView_tv_content);
+
         switch (diaries.get(position).getEmoji()) {
-            case 1: imageView.setImageResource(R.drawable.ic_baseline_add_24);
-            case 2: imageView.setImageResource(R.drawable.ic_baseline_add_24);
-            case 3: imageView.setImageResource(R.drawable.ic_baseline_add_24);
+            case 1: imageView.setImageResource(R.drawable.ic_baseline_format_list_bulleted_24);
+            case 2: imageView.setImageResource(R.drawable.ic_baseline_calendar_today_24);
+            case 3: imageView.setImageResource(R.drawable.ic_baseline_search_24);
             case 4: imageView.setImageResource(R.drawable.ic_baseline_add_24);
         }
-
-        TextView dateTextView = convertView.findViewById(R.id.listView_tv_date);
-//        dateTextView.setText(diaries.get(position).getDate());
-
-
-        TextView contentTextView = convertView.findViewById(R.id.listView_tv_content);
-        contentTextView.setText(diaries.get(position).getContent());
+        tv_date.setText(diaries.get(position).getDate());
+        tv_content.setText(diaries.get(position).getContent());
 
         return convertView;
     }

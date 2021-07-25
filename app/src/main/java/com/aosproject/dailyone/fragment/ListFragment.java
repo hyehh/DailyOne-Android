@@ -56,12 +56,12 @@ public class ListFragment extends Fragment {
         SQLiteDatabase DB;
 
         try {
-            DB = helper.getReadableDatabase();                  // select 할 수 있는 권한을 준다.
-            String query = "SELECT content, emoji, date FROM diarydata WHERE;";
-            Cursor cursor = DB.rawQuery(query, null);   // Cursor = DB 위치를 알려주는 class
+            DB = helper.getReadableDatabase();
+            String query = "SELECT * FROM diarydata WHERE date like concat(left(curdate(), 7), '%');";
+            Cursor cursor = DB.rawQuery(query, null);
 
-            StringBuffer stringBuffer = new StringBuffer();         // ArrayList 대신 StringBuffer (ArrayList는 Bean을 만들어야해서 불편)
-            while (cursor.moveToNext()) {                           // cursor.moveToNext() = rs.next()
+            StringBuffer stringBuffer = new StringBuffer();
+            while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
                 String content = cursor.getString(1);
                 int emoji = cursor.getInt(2);
