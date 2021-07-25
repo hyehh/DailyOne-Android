@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -22,9 +23,11 @@ import java.util.ArrayList;
 public class SearchFragment extends Fragment {
 
     DiaryHelper helper;
-    ListView listView;
     SeachAdapter adapter;
     ArrayList<Diary> diaries = new ArrayList<Diary>();
+
+    ListView listView;
+    Button joyButton, sadButton, angryButton, sosoButton;
 
     @Nullable
     @Override
@@ -37,9 +40,21 @@ public class SearchFragment extends Fragment {
         adapter = new SeachAdapter(getContext(), R.layout.cell_search_list, diaries);
         listView.setAdapter(adapter);
 
+        joyButton = view.findViewById(R.id.search_joy_button);
+        joyButton.setOnClickListener(onClickListener);
+
+        sadButton = view.findViewById(R.id.search_sad_button);
+        sadButton.setOnClickListener(onClickListener);
+
+        angryButton = view.findViewById(R.id.search_angry_button);
+        angryButton.setOnClickListener(onClickListener);
+
+        sosoButton = view.findViewById(R.id.search_soso_button);
+        sosoButton.setOnClickListener(onClickListener);
+
+
         return view;
     }
-
 
     private void searchingDiary(int condition) {
         SQLiteDatabase DB;
@@ -69,6 +84,26 @@ public class SearchFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.search_joy_button:
+                    searchingDiary(1);
+                    break;
+                case R.id.search_sad_button:
+                    searchingDiary(2);
+                    break;
+                case R.id.search_angry_button:
+                    searchingDiary(3);
+                    break;
+                case R.id.search_soso_button:
+                    searchingDiary(4);
+                    break;
+            }
+        }
+    };
 
 
 }
