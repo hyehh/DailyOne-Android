@@ -21,68 +21,47 @@ import static com.aosproject.dailyone.R.id.item_fragment3;
 import static com.aosproject.dailyone.R.id.item_fragment4;
 
 public class MainActivity extends AppCompatActivity {
-
     private BottomNavigationView bottomNavigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.tabar_nav);
-        bottomNavigationView.setSelectedItemId(R.id.item_fragment1);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case item_fragment1:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_view_frame, new DiaryFragment()).commit();
-                        return true;
-                    case item_fragment2:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_view_frame, new CalendarFragment()).commit();
-                        return true;
-                    case item_fragment3:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_view_frame, new ListFragment()).commit();
-                        return true;
-                    case item_fragment4:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_view_frame, new SearchFragment()).commit();
-                        return true;
-                }
-                //BottomNavigate(item.getItemId());
-                return false;
+                BottomNavigate(item.getItemId());
+                return true;
             }
         });
+        bottomNavigationView.setSelectedItemId(R.id.item_fragment1);
     }
-
-//    private void BottomNavigate(int id) {
-//        String tag = String.valueOf(id);
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//        Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
-//        if(currentFragment != null) {
-//            fragmentTransaction.hide(currentFragment);
-//        }
-//        Fragment fragment = fragmentManager.findFragmentByTag(tag);
-//        if (fragment == null) {
-//            if (id == item_fragment1){
-//                fragment = new DiaryFragment();
-//            } else if (id==item_fragment2){
-//                fragment = new CalendarFragment();
-//            } else if (id== item_fragment3){
-//                fragment = new ListFragment();
-//            } else {
-//                fragment = new SearchFragment();
-//            }
-//
-//            fragmentTransaction.add(R.id.content_view_frame, fragment, tag);
-//        } else {
-//            fragmentTransaction.show(fragment);
-//        }
-//
-//        fragmentTransaction.setPrimaryNavigationFragment(fragment);
-//        fragmentTransaction.setReorderingAllowed(true);
-//        fragmentTransaction.commitNow();
-//
-//    }
-
+    private void BottomNavigate(int id) {
+        String tag = String.valueOf(id);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
+        if(currentFragment != null) {
+            fragmentTransaction.hide(currentFragment);
+        }
+        Fragment fragment = fragmentManager.findFragmentByTag(tag);
+        if (fragment == null) {
+            if (id == item_fragment1){
+                fragment = new DiaryFragment();
+            } else if (id==item_fragment2){
+                fragment = new CalendarFragment();
+            } else if (id== item_fragment3){
+                fragment = new ListFragment();
+            } else {
+                fragment = new SearchFragment();
+            }
+            fragmentTransaction.add(R.id.content_view_frame, fragment, tag);
+        } else {
+            fragment.onResume();
+            fragmentTransaction.show(fragment);
+        }
+        fragmentTransaction.setPrimaryNavigationFragment(fragment);
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.commitNow();
+    }
 }

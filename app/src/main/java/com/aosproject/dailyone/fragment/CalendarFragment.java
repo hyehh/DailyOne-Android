@@ -190,9 +190,9 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
         protected void onPostExecute(@NonNull List<CalendarDay> calendarDays) {
             super.onPostExecute(calendarDays);
 
-//            if (getActivity().isFinishing()) {
-//                return;
-//            }
+            if (getActivity().isFinishing()) {
+                return;
+            }
 
             materialCalendarView.addDecorator(new EventDecorator(Color.parseColor("#1b663e"), calendarDays));
 

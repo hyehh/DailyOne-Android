@@ -27,7 +27,6 @@ public class SelectDayDecorator implements DayViewDecorator {
     @Override
     public void decorate(DayViewFacade view) {
         view.addSpan(new StyleSpan(Typeface.NORMAL));
-        view.addSpan(new RelativeSizeSpan(1.4f));
         view.addSpan(new ForegroundColorSpan(0xFFFFFFFF));
     }
 
