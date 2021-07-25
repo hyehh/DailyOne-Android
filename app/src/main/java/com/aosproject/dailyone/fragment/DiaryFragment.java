@@ -45,6 +45,7 @@ public class DiaryFragment extends Fragment {
 
     int dbId = 0, dbEmoji = 0; // happy = 1, sad = 2, angry = 3, soso = 4
     String diaryContent, dbDate, today;
+    String query;
 
     @Nullable
     @Override
@@ -59,7 +60,7 @@ public class DiaryFragment extends Fragment {
 
         // 오늘의 일기를 썼는지 체크. 썼다면 emoji, diaryContent 보여주기
         if (checkWriteDiary(today.substring(0, 10))) {
-            edtContent.setText(diaryContent);
+            edtContent.setText(diaryContent.trim());
             chooseEmoji(dbEmoji - 1);
         }
 
@@ -151,9 +152,12 @@ public class DiaryFragment extends Fragment {
                     Toast.makeText(getContext(), "오늘 하루는 어떠셨나요?\n오늘의 감정을 선택해주세요.", Toast.LENGTH_LONG).show();
                 } else {
                     try {
-                        String query = "INSERT INTO diarydata (content, emoji) VALUES ('" + diaryContent + "', " + dbEmoji + ");";
+                        if (diaryContent.trim().length() == 0) {
+                            query = "INSERT INTO diarydata (content, emoji) VALUES (' ', " + dbEmoji + ");";
+                        }else {
+                            query = "INSERT INTO diarydata (content, emoji) VALUES ('" + diaryContent + "', " + dbEmoji + ");";
+                        }
                         DB.execSQL(query);
-
                         diaryHelper.close();
                         Toast.makeText(getContext(), "오늘의 일기가 등록되었습니다.", Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
@@ -164,7 +168,11 @@ public class DiaryFragment extends Fragment {
             } else {
                 try {
                     today = getTime();
-                    String query = "UPDATE diarydata SET content = '" + diaryContent + "', emoji = " + dbEmoji + ", date = '" + today + "' WHERE id = " + dbId + ";";
+                    if(diaryContent.trim().length() == 0) {
+                        query = "UPDATE diarydata SET content = ' ', emoji = " + dbEmoji + ", date = '" + today + "' WHERE id = " + dbId + ";";
+                    }else {
+                        query = "UPDATE diarydata SET content = '" + diaryContent + "', emoji = " + dbEmoji + ", date = '" + today + "' WHERE id = " + dbId + ";";
+                    }
                     DB.execSQL(query);
                     diaryHelper.close();
                     Toast.makeText(getContext(), "Update OK!", Toast.LENGTH_LONG).show();

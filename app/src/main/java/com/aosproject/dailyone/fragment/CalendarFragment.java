@@ -46,13 +46,8 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
     ImageView calendar_iv_emoji;
     SQLiteDatabase db;
     DiaryHelper diary;
-    String dbContent;
-    String dbEmoji;
-    String dbDate;
-    String calendarDate;
-    String[] dbContentList;
-    String[] dbEmojiList;
-    String[] dbDateList;
+    String dbContent, dbEmoji, dbDate, calendarDate;
+    String[] dbContentList, dbEmojiList, dbDateList;
     LinearLayout calendarLinearLayout;
 
     @Nullable
@@ -65,16 +60,8 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        if (!getUserVisibleHint()) {
-            return;
-        }
         Log.v("Message", "Resume");
         connectGoData();
     }
@@ -117,17 +104,14 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
 
             cursor.close();
             diary.close();
-            // text Size
+
             materialCalendarView.setHeaderTextAppearance(R.style.TextAppearance_AppCompat_Large);
             materialCalendarView.setDateTextAppearance(R.style.TextAppearance_AppCompat_Medium);
             materialCalendarView.setWeekDayTextAppearance(R.style.TextAppearance_AppCompat_Medium);
 
             materialCalendarView.addDecorators(
-//                new MySelectorDecorator(this),
-//                new HighlightWeekendsDecorator(),
                     selectDayDecorator,
                     oneDayDecorator
-
             );
             new ApiSimulator().executeOnExecutor(Executors.newSingleThreadExecutor());
 
@@ -150,12 +134,17 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
                     if (calendarDate.equals(dbDateList[i].substring(0, dbDateList[i].indexOf(" ")))) {
                         calendarLinearLayout.setVisibility(View.VISIBLE);
 
-                        calendar_tv_content.setText(dbContentList[i]);
-                        if(dbEmojiList[i].equals("0")){
+                        if (dbContentList[i].trim().length() == 0) {
+                            calendar_tv_content.setText(" ");
+                        }else {
+                            calendar_tv_content.setText(dbContentList[i]);
+                        }
+
+                        if(dbEmojiList[i].equals("1")){
                             calendar_iv_emoji.setImageResource(R.drawable.emoji_happy);
-                        }else if(dbEmojiList[i].equals("1")){
-                            calendar_iv_emoji.setImageResource(R.drawable.emoji_sad);
                         }else if(dbEmojiList[i].equals("2")){
+                            calendar_iv_emoji.setImageResource(R.drawable.emoji_sad);
+                        }else if(dbEmojiList[i].equals("3")){
                             calendar_iv_emoji.setImageResource(R.drawable.emoji_angry);
                         }else {
                             calendar_iv_emoji.setImageResource(R.drawable.emoji_soso);
@@ -188,7 +177,7 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
                 }
             }
 
-             return dates;
+            return dates;
         }
 
         @Override
