@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:elevation="10dp"
+        android:background="@drawable/layout_background_shadow"
+        android:layout_margin="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="15dp"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:cardCornerRadius="16dp"
+                >
+
+                <ImageView
+                    android:id="@+id/profile_tv_imglist_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1일"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/profile_tv_imglist_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="일기 내용"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginLeft="15dp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

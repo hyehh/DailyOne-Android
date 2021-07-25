@@ -10,7 +10,7 @@ public class DiaryHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = "CREATE TABLE diarydata(id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, emoji INT, date DATE);";
+        String query = "CREATE TABLE diarydata(id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, emoji INT, date TEXT not null DEFAULT (datetime('now', 'localtime')));";
         db.execSQL(query);
     }
 
