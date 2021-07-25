@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:id="@+id/searched_emoji"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_baseline_search_24"></ImageView>
+
+        <TextView
+            android:id="@+id/searched_date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021.7.24"
+            >
+        </TextView>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/searched_content"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textColor="@color/black"
+
+        android:text="오늘의 일기"
+        android:textSize="20dp"
+
+        >
+    </TextView>
+
+</LinearLayout>
