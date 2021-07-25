@@ -16,17 +16,17 @@ import java.util.ArrayList;
 
 public class ListAdapter extends BaseAdapter {
 
-    private Context context = null;
+    private Context mContext = null;
     private int layout = 0;
     private ArrayList<Diary> diaries = null;
     private LayoutInflater inflater = null;
     private DiaryHelper diaryHelper;
 
-    public ListAdapter(Context context, int layout, ArrayList<Diary> diaries) {
-        this.context = context;
+    public ListAdapter(Context mContext, int layout, ArrayList<Diary> diaries) {
+        this.mContext = mContext;
         this.layout = layout;
         this.diaries = diaries;
-        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
