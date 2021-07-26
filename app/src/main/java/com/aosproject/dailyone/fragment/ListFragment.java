@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,6 +98,7 @@ public class ListFragment extends Fragment {
                                         tv_month = view.findViewById(R.id.listView_tv_month);
                                         tv_month.setText(months[which] + "월");       // which가 몇번째인지 알고있음
                                         month = months[which];
+                                        onResume();
                                     }
                                 }
                         )
@@ -150,16 +152,19 @@ public class ListFragment extends Fragment {
         SQLiteDatabase DB;
 
         helper = new DiaryHelper(getActivity());
-        adapter = new ListAdapter(getContext(), R.layout.inner_list, diaries);
-        listView.setAdapter(adapter);
+//        adapter = new ListAdapter(getContext(), R.layout.inner_list, diaries);
+//        listView.setAdapter(adapter);
 
         tv_year.setText(year + "년");
         tv_month.setText(month + "월");
-
+        Log.v("ListFragment", "onResume");
+        diaries.clear();
         try {
             DB = helper.getReadableDatabase();
             String query = "SELECT * FROM diarydata WHERE date like '" + year + "-" + month + "%';";
             Cursor cursor = DB.rawQuery(query, null);
+
+            Log.v("ListFragment", "month" + month);
 
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
@@ -169,21 +174,24 @@ public class ListFragment extends Fragment {
 
                 Diary diary = new Diary(id, content, emoji, date);
                 diaries.add(diary);
+                Log.v("ListFragment", "diary" + diaries);
             }
-
             cursor.close();
             helper.close();
+
+            adapter = new ListAdapter(getContext(), R.layout.inner_list, diaries);
+            listView.setAdapter(adapter);
 
         }catch(Exception e) {
             e.printStackTrace();
         }
 
-        try {
-            adapter = new ListAdapter(getContext(), R.layout.inner_list, diaries);
-            listView.setAdapter(adapter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            adapter = new ListAdapter(getContext(), R.layout.inner_list, diaries);
+//            listView.setAdapter(adapter);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 //    private int getIndex(Spinner spinner, String year) {

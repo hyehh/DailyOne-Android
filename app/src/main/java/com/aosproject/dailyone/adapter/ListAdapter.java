@@ -1,6 +1,7 @@
 package com.aosproject.dailyone.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        Log.v("listAdapter", "diary" + diaries.get(0).getDate());
         return diaries.size();
     }
 
