@@ -76,6 +76,7 @@ public class ListFragment extends Fragment {
                                     String[] years = getResources().getStringArray(R.array.year);
                                     tv_year = view.findViewById(R.id.listView_tv_year);
                                     tv_year.setText(years[which] + "년");       // which가 몇번째인지 알고있음
+                                    year = years[which];
                                 }
                             }
                         )
@@ -92,9 +93,10 @@ public class ListFragment extends Fragment {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        String[] months = getResources().getStringArray(R.array.year);
+                                        String[] months = getResources().getStringArray(R.array.month);
                                         tv_month = view.findViewById(R.id.listView_tv_month);
                                         tv_month.setText(months[which] + "월");       // which가 몇번째인지 알고있음
+                                        month = months[which];
                                     }
                                 }
                         )
