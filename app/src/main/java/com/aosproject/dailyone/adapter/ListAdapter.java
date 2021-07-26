@@ -55,10 +55,18 @@ public class ListAdapter extends BaseAdapter {
         TextView tv_content = convertView.findViewById(R.id.listView_tv_content);
 
         switch (diaries.get(position).getEmoji()) {
-            case 1: imageView.setImageResource(R.drawable.emoji_happy);
-            case 2: imageView.setImageResource(R.drawable.emoji_sad);
-            case 3: imageView.setImageResource(R.drawable.emoji_angry);
-            case 4: imageView.setImageResource(R.drawable.emoji_soso);
+            case 1:
+                imageView.setImageResource(R.drawable.emoji_happy);
+                break;
+            case 2:
+                imageView.setImageResource(R.drawable.emoji_sad);
+                break;
+            case 3:
+                imageView.setImageResource(R.drawable.emoji_angry);
+                break;
+            case 4:
+                imageView.setImageResource(R.drawable.emoji_soso);
+                break;
         }
         tv_date.setText(diaries.get(position).getDate());
         tv_content.setText(diaries.get(position).getContent());

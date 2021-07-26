@@ -153,8 +153,8 @@ public class ListFragment extends Fragment {
         adapter = new ListAdapter(getContext(), R.layout.inner_list, diaries);
         listView.setAdapter(adapter);
 
-        tv_year.setText(year);
-        tv_month.setText(month);
+        tv_year.setText(year + "년");
+        tv_month.setText(month + "월");
 
         try {
             DB = helper.getReadableDatabase();
