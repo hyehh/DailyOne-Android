@@ -9,31 +9,51 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="100dp"
-        android:paddingRight="120dp"
+        android:gravity="center"
         >
 
-        <Spinner
-            android:id="@+id/listView_sp_select_year"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:background="@drawable/spinner_background"
-            android:layout_margin="10dp"
-            android:spinnerMode="dropdown"
-            android:layout_weight="3"
-            />
+<!--        <Spinner-->
+<!--            android:id="@+id/listView_sp_select_year"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:background="@drawable/spinner_background"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:spinnerMode="dropdown"-->
+<!--            android:layout_weight="3"-->
+<!--            />-->
 <!--        android:theme="@style/SpinnerDivideStyle"-->
 
-        <Spinner
-            android:id="@+id/listView_sp_select_month"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:background="@drawable/spinner_background"
-            android:layout_margin="10dp"
-            android:spinnerMode="dropdown"
-            android:layout_weight="2"
-            />
+<!--        <Spinner-->
+<!--            android:id="@+id/listView_sp_select_month"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:background="@drawable/spinner_background"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:spinnerMode="dropdown"-->
+<!--            android:layout_weight="2"-->
+<!--            />-->
 <!--        android:theme="@style/SpinnerDivideStyle"-->
+
+        <TextView
+            android:id="@+id/listView_tv_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021"
+            android:textSize="25dp"
+            android:textColor="@color/purple_500"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            />
+        <TextView
+            android:id="@+id/listView_tv_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01"
+            android:textSize="25dp"
+            android:textColor="@color/purple_500"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            />
 
     </LinearLayout>
 
