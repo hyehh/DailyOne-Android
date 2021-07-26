@@ -88,7 +88,11 @@ public class DiaryFragment extends Fragment {
             }
             cursor.close();
             diaryHelper.close();
-            return true;
+            if(dbId==0){
+                return false;
+            }else{
+                return true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
