@@ -76,10 +76,7 @@ public class DiaryFragment extends Fragment {
         try {
             DB = diaryHelper.getReadableDatabase();
             String query = "SELECT id, content, emoji, date FROM diarydata WHERE date like '" + today + "%';";
-
             Cursor cursor = DB.rawQuery(query, null);
-            StringBuffer stringBuffer = new StringBuffer();
-
             while (cursor.moveToNext()) {
                 dbId = cursor.getInt(0);
                 diaryContent = cursor.getString(1);
@@ -88,7 +85,11 @@ public class DiaryFragment extends Fragment {
             }
             cursor.close();
             diaryHelper.close();
-            return true;
+            if(dbId==0){
+                return false;
+            }else{
+                return true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
