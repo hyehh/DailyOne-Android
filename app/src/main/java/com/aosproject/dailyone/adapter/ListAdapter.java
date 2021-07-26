@@ -32,7 +32,6 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        Log.v("listAdapter", "diary" + diaries.get(0).getDate());
         return diaries.size();
     }
 

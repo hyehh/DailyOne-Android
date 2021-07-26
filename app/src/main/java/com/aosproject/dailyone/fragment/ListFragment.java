@@ -35,15 +35,10 @@ public class ListFragment extends Fragment {
 
     DiaryHelper helper;
     ListAdapter adapter;
-//    ArrayAdapter<CharSequence> arrayAdapterYear = null;
-//    ArrayAdapter<CharSequence> arrayAdapterMonth = null;
     ArrayList<Diary> diaries = new ArrayList<Diary>();
 
     ListView listView;
     TextView tv_year, tv_month;
-
-//    Spinner spinnerMonth = null;
-//    Spinner spinnerYear = null;
 
     Date currentTime = Calendar.getInstance().getTime();
     SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.getDefault());
@@ -62,21 +57,18 @@ public class ListFragment extends Fragment {
         tv_year = view.findViewById(R.id.listView_tv_year);
         tv_month = view.findViewById(R.id.listView_tv_month);
 
-//        String[] arrayYear = getResources().getStringArray(R.array.year);
-//        String[] arrayMonth = getResources().getStringArray(R.array.month);
-
         tv_year.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(getContext())
                     .setTitle("연도를 선택하세요.")
-                    .setItems(R.array.year,        // 여러개 항목 중 선택할 수 있는 메소드 = items
+                    .setItems(R.array.year,
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     String[] years = getResources().getStringArray(R.array.year);
                                     tv_year = view.findViewById(R.id.listView_tv_year);
-                                    tv_year.setText(years[which] + "년");       // which가 몇번째인지 알고있음
+                                    tv_year.setText(years[which] + "년");
                                     year = years[which];
                                 }
                             }
@@ -85,18 +77,19 @@ public class ListFragment extends Fragment {
                     .show();
             }
         });
+
         tv_month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(getContext())
                         .setTitle("월을 선택하세요.")
-                        .setItems(R.array.month,        // 여러개 항목 중 선택할 수 있는 메소드 = items
+                        .setItems(R.array.month,
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         String[] months = getResources().getStringArray(R.array.month);
                                         tv_month = view.findViewById(R.id.listView_tv_month);
-                                        tv_month.setText(months[which] + "월");       // which가 몇번째인지 알고있음
+                                        tv_month.setText(months[which] + "월");
                                         month = months[which];
                                         onResume();
                                     }
@@ -106,41 +99,6 @@ public class ListFragment extends Fragment {
                         .show();
             }
         });
-
-//        spinnerYear = view.findViewById(R.id.listView_sp_select_year);
-//        arrayAdapterYear = ArrayAdapter.createFromResource(getContext(), R.array.year, android.R.layout.simple_spinner_item);
-//        arrayAdapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinnerYear.setAdapter(arrayAdapterYear);
-//        spinnerYear.setSelection(getIndex(spinnerYear, year));
-//        spinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                year = arrayYear[position];
-//            }
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//            }
-//        });
-//
-//        spinnerMonth = view.findViewById(R.id.listView_sp_select_month);
-//        arrayAdapterMonth = ArrayAdapter.createFromResource(getContext(), R.array.month, android.R.layout.simple_spinner_item);
-//        arrayAdapterMonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinnerMonth.setAdapter(arrayAdapterMonth);
-//        spinnerMonth.setSelection(getIndex(spinnerMonth, month));
-//        spinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                month = arrayMonth[position];
-//            }
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//            }
-//        });
-
-
-//        helper = new DiaryHelper(getActivity());
-//        adapter = new ListAdapter(getContext(), R.layout.inner_list, diaries);
-//        listView.setAdapter(adapter);
 
         return view;
     }
@@ -152,13 +110,12 @@ public class ListFragment extends Fragment {
         SQLiteDatabase DB;
 
         helper = new DiaryHelper(getActivity());
-//        adapter = new ListAdapter(getContext(), R.layout.inner_list, diaries);
-//        listView.setAdapter(adapter);
 
         tv_year.setText(year + "년");
         tv_month.setText(month + "월");
-        Log.v("ListFragment", "onResume");
+
         diaries.clear();
+
         try {
             DB = helper.getReadableDatabase();
             String query = "SELECT * FROM diarydata WHERE date like '" + year + "-" + month + "%';";
@@ -185,22 +142,5 @@ public class ListFragment extends Fragment {
         }catch(Exception e) {
             e.printStackTrace();
         }
-
-//        try {
-//            adapter = new ListAdapter(getContext(), R.layout.inner_list, diaries);
-//            listView.setAdapter(adapter);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
-
-//    private int getIndex(Spinner spinner, String year) {
-//        for(int i=0; i<spinner.getCount(); i++) {
-//            if(spinner.getItemAtPosition(i).toString().equalsIgnoreCase(year)) {
-//                return i;
-//            }
-//        }
-//        return 0;
-//    }
-
 }
