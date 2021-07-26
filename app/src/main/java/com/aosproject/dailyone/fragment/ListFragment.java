@@ -21,7 +21,11 @@ import com.aosproject.dailyone.R;
 import com.aosproject.dailyone.bean.Diary;
 import com.aosproject.dailyone.util.DiaryHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class ListFragment extends Fragment {
 
@@ -36,8 +40,12 @@ public class ListFragment extends Fragment {
     Spinner spinnerMonth = null;
     Spinner spinnerYear = null;
 
-    String year = "";
-    String month = "";
+    Date currentTime = Calendar.getInstance().getTime();
+    SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.getDefault());
+    SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+
+    String year = yearFormat.format(currentTime);
+    String month = monthFormat.format(currentTime);
 
     @Nullable
     @Override
@@ -54,6 +62,7 @@ public class ListFragment extends Fragment {
         arrayAdapterYear = ArrayAdapter.createFromResource(getContext(), R.array.year, android.R.layout.simple_spinner_item);
         arrayAdapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerYear.setAdapter(arrayAdapterYear);
+        spinnerYear.setSelection(getIndex(spinnerYear, year));
         spinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -68,6 +77,7 @@ public class ListFragment extends Fragment {
         arrayAdapterMonth = ArrayAdapter.createFromResource(getContext(), R.array.month, android.R.layout.simple_spinner_item);
         arrayAdapterMonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMonth.setAdapter(arrayAdapterMonth);
+        spinnerMonth.setSelection(getIndex(spinnerMonth, month));
         spinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -97,7 +107,6 @@ public class ListFragment extends Fragment {
             String query = "SELECT * FROM diarydata WHERE date like '" + year + "-" + month + "%';";
             Cursor cursor = DB.rawQuery(query, null);
 
-            StringBuffer stringBuffer = new StringBuffer();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
                 String content = cursor.getString(1);
@@ -122,4 +131,14 @@ public class ListFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+    private int getIndex(Spinner spinner, String year) {
+        for(int i=0; i<spinner.getCount(); i++) {
+            if(spinner.getItemAtPosition(i).toString().equalsIgnoreCase(year)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
 }
