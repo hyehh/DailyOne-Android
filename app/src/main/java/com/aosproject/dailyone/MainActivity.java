@@ -18,11 +18,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import static com.aosproject.dailyone.R.id.item_fragment1;
 import static com.aosproject.dailyone.R.id.item_fragment2;
 import static com.aosproject.dailyone.R.id.item_fragment3;
+import static com.aosproject.dailyone.R.id.item_fragment4;
 
 public class MainActivity extends AppCompatActivity {
-
     private BottomNavigationView bottomNavigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +36,10 @@ public class MainActivity extends AppCompatActivity {
         });
         bottomNavigationView.setSelectedItemId(R.id.item_fragment1);
     }
-
     private void BottomNavigate(int id) {
         String tag = String.valueOf(id);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
         Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
         if(currentFragment != null) {
             fragmentTransaction.hide(currentFragment);
@@ -60,13 +57,11 @@ public class MainActivity extends AppCompatActivity {
             }
             fragmentTransaction.add(R.id.content_view_frame, fragment, tag);
         } else {
+            fragment.onResume();
             fragmentTransaction.show(fragment);
         }
-
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNow();
-
     }
-
 }
