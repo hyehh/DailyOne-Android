@@ -130,13 +130,42 @@ public class DiaryFragment extends Fragment {
 
     // get emoji number
     private int chooseEmoji(int emojiNum) {
-        for (int i = 0; i < ivEmoji.length; i++) {
-            ivEmoji[i].setBackgroundColor(Color.TRANSPARENT);
-            if (i == emojiNum) {
-                ivEmoji[i].setBackgroundColor(Color.LTGRAY);
-            }
+
+        switch (emojiNum){
+            case 0:
+                ivHappy.setImageResource(R.drawable.emoji_happy);
+                ivSad.setImageResource(R.drawable.emoji_sad_off);
+                ivAngry.setImageResource(R.drawable.emoji_angry_off);
+                ivSoso.setImageResource(R.drawable.emoji_soso_off);
+                return 1;
+            case 1:
+                ivHappy.setImageResource(R.drawable.emoji_happy_off);
+                ivSad.setImageResource(R.drawable.emoji_sad);
+                ivAngry.setImageResource(R.drawable.emoji_angry_off);
+                ivSoso.setImageResource(R.drawable.emoji_soso_off);
+                return 2;
+            case 2:
+                ivHappy.setImageResource(R.drawable.emoji_happy_off);
+                ivSad.setImageResource(R.drawable.emoji_sad_off);
+                ivAngry.setImageResource(R.drawable.emoji_angry);
+                ivSoso.setImageResource(R.drawable.emoji_soso_off);
+                return 3;
+            case 3:
+                ivHappy.setImageResource(R.drawable.emoji_happy_off);
+                ivSad.setImageResource(R.drawable.emoji_sad_off);
+                ivAngry.setImageResource(R.drawable.emoji_angry_off);
+                ivSoso.setImageResource(R.drawable.emoji_soso);
+                return 4;
+            default:
+                return 0;
         }
-        return emojiNum + 1;
+//        for (int i = 0; i < ivEmoji.length; i++) {
+//            ivEmoji[i].setBackgroundColor(Color.TRANSPARENT);
+//            if (i == emojiNum) {
+//                ivEmoji[i].setBackgroundColor(Color.LTGRAY);
+//            }
+//        }
+//        return emojiNum + 1;
     }
     // ---------------------------- end
 

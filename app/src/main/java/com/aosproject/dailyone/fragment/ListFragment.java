@@ -185,7 +185,7 @@ public class ListFragment extends Fragment {
                 DB = helper.getReadableDatabase();
                 String query = "DELETE FROM diarydata WHERE id=" + id + ";";
                 DB.execSQL(query);
-
+                result = "1";
                 helper.close();
 
             }catch(Exception e) {
