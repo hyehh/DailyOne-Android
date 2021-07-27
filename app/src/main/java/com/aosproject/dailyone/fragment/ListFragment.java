@@ -151,7 +151,7 @@ public class ListFragment extends Fragment {
 
         try {
             DB = helper.getReadableDatabase();
-            String query = "SELECT id, content, emoji, SUBSTRING(deal,9) FROM diarydata WHERE date like '" + year + "-" + month + "%';";
+            String query = "SELECT id, content, emoji, date FROM diarydata WHERE date like '" + year + "-" + month + "%';";
             Cursor cursor = DB.rawQuery(query, null);
 
             while (cursor.moveToNext()) {
