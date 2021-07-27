@@ -40,7 +40,7 @@
                     android:layout_weight="1"
                     android:layout_marginHorizontal="8dp"
                     android:padding="8dp"
-                    android:src="@drawable/emoji_happy"
+                    android:src="@drawable/emoji_happy_off"
                     />
                 <ImageView
                     android:id="@+id/diary_iv_emoji_sad"
@@ -49,7 +49,7 @@
                     android:layout_weight="1"
                     android:layout_marginHorizontal="8dp"
                     android:padding="8dp"
-                    android:src="@drawable/emoji_sad"
+                    android:src="@drawable/emoji_sad_off"
                     />
                 <ImageView
                     android:id="@+id/diary_iv_emoji_angry"
@@ -58,7 +58,7 @@
                     android:layout_weight="1"
                     android:layout_marginHorizontal="8dp"
                     android:padding="8dp"
-                    android:src="@drawable/emoji_angry"
+                    android:src="@drawable/emoji_angry_off"
                     />
                 <ImageView
                     android:id="@+id/diary_iv_emoji_soso"
@@ -67,7 +67,7 @@
                     android:layout_weight="1"
                     android:layout_marginHorizontal="8dp"
                     android:padding="8dp"
-                    android:src="@drawable/emoji_soso"
+                    android:src="@drawable/emoji_soso_off"
                     />
             </LinearLayout>
         </LinearLayout>
