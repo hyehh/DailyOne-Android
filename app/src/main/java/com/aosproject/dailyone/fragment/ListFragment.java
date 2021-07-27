@@ -5,17 +5,16 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.aosproject.dailyone.SwipeDismissListViewTouchListener;
 import com.aosproject.dailyone.adapter.ListAdapter;
 
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -100,6 +99,36 @@ public class ListFragment extends Fragment {
             }
         });
 
+
+
+        SwipeDismissListViewTouchListener touchListener =
+                new SwipeDismissListViewTouchListener(listView,
+                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                            @Override
+                            public boolean canDismiss(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    String deleteResult = connectDeleteData(diaries.get(position).getId());
+                                    diaries.remove(diaries.get(position));
+                                    if(deleteResult.equals("1")){
+                                        Toast.makeText(getContext(), "일기가 삭제되었습니다.", Toast.LENGTH_LONG).show();
+                                    }else {
+                                        Toast.makeText(getContext(), "일기 삭제 실패했습니다.\n관리자에게 문의하세요", Toast.LENGTH_LONG).show();
+                                    }
+                                    connectGetData();
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+
+                        });
+
+        listView.setOnTouchListener(touchListener);
+        listView.setOnScrollListener(touchListener.makeScrollListener());
+
         return view;
     }
 
@@ -107,6 +136,10 @@ public class ListFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        connectGetData();
+    }
+
+    private void connectGetData() {
         SQLiteDatabase DB;
 
         helper = new DiaryHelper(getActivity());
@@ -121,8 +154,6 @@ public class ListFragment extends Fragment {
             String query = "SELECT * FROM diarydata WHERE date like '" + year + "-" + month + "%';";
             Cursor cursor = DB.rawQuery(query, null);
 
-            Log.v("ListFragment", "month" + month);
-
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(0);
                 String content = cursor.getString(1);
@@ -131,7 +162,6 @@ public class ListFragment extends Fragment {
 
                 Diary diary = new Diary(id, content, emoji, date);
                 diaries.add(diary);
-                Log.v("ListFragment", "diary" + diaries);
             }
             cursor.close();
             helper.close();
@@ -142,5 +172,29 @@ public class ListFragment extends Fragment {
         }catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String connectDeleteData(int id){
+        String result = null;
+        try {
+            SQLiteDatabase DB;
+
+            helper = new DiaryHelper(getActivity());
+
+            try {
+                DB = helper.getReadableDatabase();
+                String query = "DELETE FROM diarydata WHERE id=" + id + ";";
+                DB.execSQL(query);
+
+                helper.close();
+
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+        //잘끝났으면 1 아니면 에러
     }
 }
