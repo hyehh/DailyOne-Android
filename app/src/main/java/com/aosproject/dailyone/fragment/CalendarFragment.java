@@ -58,7 +58,6 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_calendar, container,false);
-        Log.v("Message", "1");
         return view;
     }
 
@@ -66,29 +65,10 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
     public void onResume() {
         super.onResume();
         getActivity().setTitle("캘린더");
-        Log.v("Message", "Resume");
-        if (Share.selectedDay.isEmpty()){
-            connectGoFirstData();
-        }else {
-            connectGoData();
-        }
+        connectGoData();
     }
 
-    // 초기 세팅과 오늘 날짜 선택 시 sqlite와 layout과 연결
-    private void connectGoFirstData() {
-
-        diary = new DiaryHelper(getActivity());
-
-        materialCalendarView = getActivity().findViewById(R.id.material_calendar_view);
-        calendar_tv_content = getActivity().findViewById(R.id.calendar_tv_content);
-        calendar_iv_emoji = getActivity().findViewById(R.id.calendar_iv_emoji);
-        calendarLinearLayout = getActivity().findViewById(R.id.calendar_linearLayout);
-
-        dbFirstSelect();
-
-    }
-
-    // 이 외 sqlite와 layout과 연결
+    // sqlite와 layout과 연결
     private void connectGoData() {
 
         diary = new DiaryHelper(getActivity());
@@ -101,55 +81,7 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
         dbSelect();
     }
 
-    // 초기 세팅과 오늘 날짜 선택 시 sqlite db 불러오기 및 캘린더 초기 설정
-    private void dbFirstSelect() {
-        try {
-            db = diary.getReadableDatabase();
-            String query = "SELECT content, emoji, date FROM diarydata;";
-            Cursor cursor = db.rawQuery(query, null);
-            StringBuffer stringBufferContent = new StringBuffer();
-            StringBuffer stringBufferEmoji = new StringBuffer();
-            StringBuffer stringBufferDate = new StringBuffer();
-            while (cursor.moveToNext()){
-                String content = cursor.getString(0);
-                int emoji = cursor.getInt(1);
-                String date = cursor.getString(2);
-                stringBufferContent.append(content+"@,~/!@");
-                stringBufferEmoji.append(emoji+",");
-                stringBufferDate.append(date+",");
-            }
-
-            dbContent = stringBufferContent.toString();
-            dbEmoji = stringBufferEmoji.toString();
-            dbDate = stringBufferDate.toString();
-
-            dbContentList = dbContent.split("@,~/!@");
-            dbEmojiList = dbEmoji.split(",");
-            dbDateList = dbDate.split(",");
-
-            cursor.close();
-            diary.close();
-
-            materialCalendarView.setHeaderTextAppearance(R.style.TextAppearance_AppCompat_Large);
-            materialCalendarView.setDateTextAppearance(R.style.TextAppearance_AppCompat_Medium);
-            materialCalendarView.setWeekDayTextAppearance(R.style.TextAppearance_AppCompat_Medium);
-
-            materialCalendarView.addDecorators(
-                    selectDayDecorator,
-                    oneDayDecorator
-            );
-            new ApiSimulator().executeOnExecutor(Executors.newSingleThreadExecutor());
-
-            materialCalendarView.setSelectedDate(CalendarDay.today());
-            materialCalendarView.setOnDateChangedListener(this);
-            onSelectedToday();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    // 이 외 sqlite db 불러오기 및 캘린더 초기 설정
+    // sqlite db 불러오기 및 캘린더 초기 설정
     private void dbSelect() {
         try {
             db = diary.getReadableDatabase();
@@ -190,21 +122,29 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
 
             materialCalendarView.setOnDateChangedListener(this);
 
+            // 사용자가 선택한 날짜가 오늘 날짜인 경우 method 분리
+            if (Share.selectedDay.isEmpty()){
+                materialCalendarView.setSelectedDate(CalendarDay.today());
+                onSelectedToday();
+            }
+
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
+    // 오늘 날짜를 선택했을 경우 method
     private void onSelectedToday() {
+        Log.v("Message", "onSelectedToday");
         long now = System.currentTimeMillis();
         Date dateNow = new Date(now);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         calendarToday = sdf.format(dateNow);
+        calendarLinearLayout.setVisibility(View.VISIBLE);
 
         if(dbDateList[0].isEmpty() == false){
             for (int i = 0; i < dbDateList.length; i++) {
                 if (calendarToday.equals(dbDateList[i].substring(0, dbDateList[i].indexOf(" ")))) {
-                    calendarLinearLayout.setVisibility(View.VISIBLE);
 
                     if (dbContentList[i].trim().length() == 0) {
                         calendar_tv_content.setText(" ");
@@ -226,28 +166,26 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
         }
     }
 
-    // 캘린더에서 특정 날짜를 선택했을 경우
+    // 캘린더에서 특정 날짜를 선택했을 경우 method
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        Log.v("Message", "3");
-
+        Log.v("Message", "onDateSelected");
         selectDayDecorator.setDate(date.getDate());
         materialCalendarView.invalidateDecorators();
 
         calendarDate = FORMATTER.format(date.getDate());
 
-        Log.v("Message", calendarDate);
-        Log.v("Message", calendarToday);
-
         if (calendarDate.equals(calendarToday)) {
-            Log.v("Message", "여기???");
             Share.selectedDay = "";
+            calendarLinearLayout.setVisibility(View.VISIBLE);
+            calendar_tv_content.setText("오늘의 일기를 작성해주세요!");
+            calendar_iv_emoji.setImageResource(R.drawable.ic_baseline_add_circle_outline_24);
         }else {
             Share.selectedDay = calendarDate;
+            calendarLinearLayout.setVisibility(View.GONE);
         }
 
         if(selected) {
-            calendarLinearLayout.setVisibility(View.GONE);
             if(dbDateList[0].isEmpty() == false){
                 for (int i = 0; i < dbDateList.length; i++) {
                     if (calendarDate.equals(dbDateList[i].substring(0, dbDateList[i].indexOf(" ")))) {
@@ -271,7 +209,6 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
                     }
                 }
             }
-
         }
     }
     /**
@@ -282,8 +219,6 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
         // sqlite에 데이터가 있는 날짜에 점 찍기
         @Override
         protected List<CalendarDay> doInBackground(@NonNull Void... voids) {
-            Log.v("Message", "4");
-
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -292,30 +227,24 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
 
             final ArrayList<CalendarDay> dates = new ArrayList<>();
 
-
             if (dbDateList[0].isEmpty() == false) {
                 for (int i = 0; i < dbDateList.length; i++) {
                     final CalendarDay day = CalendarDay.from(LocalDate.parse(dbDateList[i].substring(0, dbDateList[i].indexOf(" "))));
                     dates.add(day);
                 }
             }
-
             return dates;
         }
 
         // 특정 날짜에 찍는 점에 대한 decorator 추가
         @Override
         protected void onPostExecute(@NonNull List<CalendarDay> calendarDays) {
-            Log.v("Message", "5");
-
             super.onPostExecute(calendarDays);
 
             if (getActivity().isFinishing()) {
                 return;
             }
-
             materialCalendarView.addDecorator(new EventDecorator(Color.parseColor("#1b663e"), calendarDays));
-
         }
     }
 }
