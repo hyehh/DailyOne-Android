@@ -69,7 +69,8 @@ public class ListAdapter extends BaseAdapter {
                 imageView.setImageResource(R.drawable.emoji_soso);
                 break;
         }
-        tv_date.setText(diaries.get(position).getDate() + "일");
+        String date = diaries.get(position).getDate().substring(9,10) + "일";
+        tv_date.setText(date);
         tv_content.setText(diaries.get(position).getContent());
 
         return convertView;
