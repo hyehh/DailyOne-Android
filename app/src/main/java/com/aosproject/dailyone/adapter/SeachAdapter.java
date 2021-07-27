@@ -53,15 +53,17 @@ public class SeachAdapter extends BaseAdapter {
 
         ImageView imageView = convertView.findViewById(R.id.searched_emoji);
         switch (diaries.get(position).getEmoji()) {
-            case 1: imageView.setImageResource(R.drawable.ic_baseline_add_24);
-            case 2: imageView.setImageResource(R.drawable.ic_baseline_add_24);
-            case 3: imageView.setImageResource(R.drawable.ic_baseline_add_24);
-            case 4: imageView.setImageResource(R.drawable.ic_baseline_add_24);
+            case 1: imageView.setImageResource(R.drawable.emoji_happy);
+            break;
+            case 2: imageView.setImageResource(R.drawable.emoji_sad);
+            break;
+            case 3: imageView.setImageResource(R.drawable.emoji_angry);
+            break;
+            case 4: imageView.setImageResource(R.drawable.emoji_soso);
+            break;
         }
 
         TextView dateTextView = convertView.findViewById(R.id.searched_date_text);
-//        dateTextView.setText(diaries.get(position).getDate());
-
 
         TextView contentTextView = convertView.findViewById(R.id.searched_content);
         contentTextView.setText(diaries.get(position).getContent());

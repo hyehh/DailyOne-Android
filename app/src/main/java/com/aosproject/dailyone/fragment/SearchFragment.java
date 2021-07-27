@@ -106,9 +106,10 @@ public class SearchFragment extends Fragment {
                         sadButton.setChecked(false);
                         angryButton.setChecked(false);
                         sosoButton.setChecked(false);
-                    } else {
-                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_happy_off));
                     }
+//                    else {
+//                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_happy_off));
+//                    }
                     break;
                 case R.id.search_sad_button:
                     searchingDiary(2);
@@ -120,9 +121,10 @@ public class SearchFragment extends Fragment {
                         joyButton.setChecked(false);
                         angryButton.setChecked(false);
                         sosoButton.setChecked(false);
-                    } else {
-                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_sad_off));
                     }
+//                    else {
+//                        sadButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_sad_off));
+//                    }
                     break;
                 case R.id.search_angry_button:
                     searchingDiary(3);
@@ -134,9 +136,10 @@ public class SearchFragment extends Fragment {
                         sadButton.setChecked(false);
                         joyButton.setChecked(false);
                         sosoButton.setChecked(false);
-                    } else {
-                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_angry_off));
                     }
+//                    else {
+//                        angryButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_angry_off));
+//                    }
                     break;
                 case R.id.search_soso_button:
                     searchingDiary(4);
@@ -148,9 +151,10 @@ public class SearchFragment extends Fragment {
                         sadButton.setChecked(false);
                         angryButton.setChecked(false);
                         joyButton.setChecked(false);
-                    } else {
-                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_soso_off));
                     }
+//                    else {
+//                        sosoButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_soso_off));
+//                    }
                     break;
             }
         }
