@@ -11,6 +11,7 @@
         >
 
         <ImageView
+            android:layout_margin="4dp"
             android:id="@+id/searched_emoji"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -21,17 +22,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2021.7.24"
-            >
-        </TextView>
+            ></TextView>
 
     </LinearLayout>
 
     <TextView
+        android:layout_margin="8dp"
+        android:gravity="center"
         android:id="@+id/searched_content"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="match_parent"
         android:textColor="@color/black"
-
+        android:textStyle="bold"
         android:text="오늘의 일기"
         android:textSize="20dp"
 
