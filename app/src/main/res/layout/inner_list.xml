@@ -24,19 +24,12 @@
             android:layout_margin="15dp"
             >
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                app:cardCornerRadius="16dp"
-                >
-
-                <ImageView
-                    android:id="@+id/listVIew_iv_emoji"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    />
-            </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/listVIew_iv_emoji"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                />
 
             <TextView
                 android:id="@+id/listView_tv_date"
@@ -45,7 +38,6 @@
                 android:text="1일"
                 android:gravity="center"
                 android:paddingTop="10dp"
-                android:textSize="20dp"
                 android:textColor="@color/black"
                 />
 
