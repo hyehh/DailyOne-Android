@@ -15,7 +15,8 @@
         >
 
         <ToggleButton
-            android:layout_margin="4dp"
+
+            android:layout_margin="16dp"
             android:id="@+id/search_joy_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -27,7 +28,7 @@
         </ToggleButton>
 
         <ToggleButton
-            android:layout_margin="4dp"
+            android:layout_margin="16dp"
             android:id="@+id/search_sad_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,7 +40,7 @@
         </ToggleButton>
 
         <ToggleButton
-            android:layout_margin="4dp"
+            android:layout_margin="16dp"
             android:id="@+id/search_angry_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,7 +52,7 @@
         </ToggleButton>
 
         <ToggleButton
-            android:layout_margin="4dp"
+            android:layout_margin="16dp"
             android:id="@+id/search_soso_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
