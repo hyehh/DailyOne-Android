@@ -13,38 +13,50 @@
         android:padding="8dp"
         >
 
-        <Button
+        <ToggleButton
             android:id="@+id/search_joy_button"
             android:layout_width="0dp"
-            android:layout_height= "match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="8dp"
+            android:background="@drawable/emoji_happy_off"
+            android:textOff=""
+            android:textOn=""
             >
-        </Button>
+        </ToggleButton>
 
-        <Button
+        <ToggleButton
             android:id="@+id/search_sad_button"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="8dp">
-        </Button>
+            android:background="@drawable/emoji_sad_off"
+            android:textOff=""
+            android:textOn=""
+            >
+        </ToggleButton>
 
-        <Button
+        <ToggleButton
             android:id="@+id/search_angry_button"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="8dp">
-        </Button>
+            android:background="@drawable/emoji_angry_off"
+            android:textOff=""
+            android:textOn=""
+            >
+        </ToggleButton>
 
-        <Button
+        <ToggleButton
             android:id="@+id/search_soso_button"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="8dp">
-        </Button>
+            android:background="@drawable/emoji_soso_off"
+            android:textOff=""
+            android:textOn=""
+            >
+        </ToggleButton>
+
     </LinearLayout>
 
     <ListView

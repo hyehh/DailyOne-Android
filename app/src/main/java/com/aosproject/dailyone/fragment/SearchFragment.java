@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +28,7 @@ public class SearchFragment extends Fragment {
     ArrayList<Diary> diaries = new ArrayList<Diary>();
 
     ListView listView;
-    Button joyButton, sadButton, angryButton, sosoButton;
+    ToggleButton joyButton, sadButton, angryButton, sosoButton;
 
     @Nullable
     @Override
@@ -97,19 +98,62 @@ public class SearchFragment extends Fragment {
             switch (v.getId()) {
                 case R.id.search_joy_button:
                     searchingDiary(1);
+                    if (joyButton.isChecked()) {
+                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_happy));
+                        sadButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_sad_off));
+                        angryButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_angry_off));
+                        sosoButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_soso_off));
+                        sadButton.setChecked(false);
+                        angryButton.setChecked(false);
+                        sosoButton.setChecked(false);
+                    } else {
+                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_happy_off));
+                    }
                     break;
                 case R.id.search_sad_button:
                     searchingDiary(2);
+                    if (sadButton.isChecked()) {
+                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_happy_off));
+                        sadButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_sad));
+                        angryButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_angry_off));
+                        sosoButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_soso_off));
+                        joyButton.setChecked(false);
+                        angryButton.setChecked(false);
+                        sosoButton.setChecked(false);
+                    } else {
+                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_sad_off));
+                    }
                     break;
                 case R.id.search_angry_button:
                     searchingDiary(3);
+                    if (angryButton.isChecked()) {
+                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_happy_off));
+                        sadButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_sad_off));
+                        angryButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_angry));
+                        sosoButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_soso_off));
+                        sadButton.setChecked(false);
+                        joyButton.setChecked(false);
+                        sosoButton.setChecked(false);
+                    } else {
+                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_angry_off));
+                    }
                     break;
                 case R.id.search_soso_button:
                     searchingDiary(4);
+                    if (sosoButton.isChecked()) {
+                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_happy_off));
+                        sadButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_sad_off));
+                        angryButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_angry_off));
+                        sosoButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_soso));
+                        sadButton.setChecked(false);
+                        angryButton.setChecked(false);
+                        joyButton.setChecked(false);
+                    } else {
+                        joyButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.emoji_soso_off));
+                    }
                     break;
             }
         }
     };
-
 
 }
