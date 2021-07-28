@@ -1,28 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical"
+<ScrollView
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:id="@+id/material_calendar_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:mcv_selectionColor="#1b663e"
-        />
-
-    <ListView
-        android:id="@+id/calendar_list_view"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="20dp"
+    >
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        >
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/material_calendar_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mcv_selectionColor="#779E76"
+            android:layout_marginTop="10dp"
+            />
 
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="hello" />
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/calendar_linearLayout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_border"
+            android:layout_marginTop="5dp"
+            android:visibility="visible"
+            >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                >
+                <ImageView
+                    android:id="@+id/calendar_iv_emoji"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="8dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_baseline_add_circle_outline_24"
+                    />
+
+                <TextView
+                    android:id="@+id/calendar_tv_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:layout_gravity="center"
+                    android:text="오늘의 일기를 작성해주세요!"
+                    android:textSize="20dp"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

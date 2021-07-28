@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        >
+
+        <ToggleButton
+
+            android:layout_margin="16dp"
+            android:id="@+id/search_joy_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/emoji_happy_off"
+            android:textOff=""
+            android:textOn=""
+            >
+        </ToggleButton>
+
+        <ToggleButton
+            android:layout_margin="16dp"
+            android:id="@+id/search_sad_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/emoji_sad_off"
+            android:textOff=""
+            android:textOn=""
+            >
+        </ToggleButton>
+
+        <ToggleButton
+            android:layout_margin="16dp"
+            android:id="@+id/search_angry_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/emoji_angry_off"
+            android:textOff=""
+            android:textOn=""
+            >
+        </ToggleButton>
+
+        <ToggleButton
+            android:layout_margin="16dp"
+            android:id="@+id/search_soso_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/emoji_soso_off"
+            android:textOff=""
+            android:textOn=""
+            >
+        </ToggleButton>
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_marginHorizontal="20dp"
+        android:id="@+id/searched_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </ListView>
+</LinearLayout>
